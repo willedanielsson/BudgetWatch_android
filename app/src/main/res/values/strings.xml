@@ -1,0 +1,92 @@
+<resources>
+    <string name="app_name">BW-Android</string>
+    <string name="icon">icon</string>
+    <string name="budgetsTitle">Budgets</string>
+    <string name="addBudgetTitle">Add Budget</string>
+    <string name="viewBudgetTitle">View Budget</string>
+    <string name="editBudgetTitle">Edit Budget</string>
+    <string name="budgetDescription">Create and manage budgets</string>
+    <string name="transactionsTitle">Transactions</string>
+    <string name="transactionsDescription">Enter transactions and revenues</string>
+    <string name="addExpenseTransactionTitle">Add Expense</string>
+    <string name="editExpenseTransactionTitle">Edit Expense</string>
+    <string name="viewExpenseTransactionTitle">View Expense</string>
+    <string name="addRevenueTransactionTitle">Add Revenue</string>
+    <string name="editRevenueTransactionTitle">Edit Revenue</string>
+    <string name="viewRevenueTransactionTitle">View Revenue</string>
+    <string name="importExportTitle">Import/Export</string>
+
+    <string name="add">Add</string>
+    <string name="selectDates">Select Dates</string>
+    <string name="type">Type</string>
+    <string name="value">Value</string>
+    <string name="name">Name</string>
+    <string name="budget">Budget</string>
+    <string name="account">Account</string>
+    <string name="note">Note</string>
+    <string name="date">Date</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="set">Set</string>
+    <string name="receipt">Receipt</string>
+    <string name="capture">Capture</string>
+    <string name="view">View</string>
+    <string name="update">Update</string>
+    <string name="clean">Clean</string>
+
+    <string name="Grocery">Grocery</string>
+    <string name="one_hundred">100</string>
+    <string name="fraction">%1$d/%2$d</string>
+
+    <string name="budgetTypeMissing">Budget type is empty</string>
+    <string name="budgetValueMissing">Budget value is empty</string>
+    <string name="budgetMissing">No budget selected</string>
+    <string name="valueMissing">Value is empty</string>
+    <string name="valueInvalid">Value invalid</string>
+    <string name="dateInvalid">Date invalid</string>
+
+    <string name="expensesTitle">Expenses</string>
+    <string name="revenuesTitle">Revenues</string>
+
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+
+    <!-- A date range, where both arguments are date strings -->
+    <string name="dateRangeFormat">%1$s ~ %2$s</string>
+
+    <string name="noBudgets">You don\'t have any budgets at the moment. Click the "+" (plus) button up top to get started.\n\nBudget Watch lets you create budgets, then track spending during the month.</string>
+    <string name="noExpenses">You don\'t have any expense transactions at the moment. Click the "+" (plus) button up top to get started.</string>
+    <string name="noExpensesForBudget">You don\'t have any expense transactions for budget \"%1$s\"</string>
+    <string name="noRevenues">You don\'t have any revenue transactions at the moment. Click the "+" (plus) button up top to get started.</string>
+    <string name="noRevenuesForBudget">You don\'t have any revenue transactions for budget \"%1$s\"</string>
+
+    <string name="budgetDateRangeHelp">Select date range to display for budgets</string>
+    <string name="startDate">Start date</string>
+    <string name="endDate">End date</string>
+    <string name="startDateAfterEndDate">Start date must be on or before end date</string>
+
+    <string name="cleanupHelp">Select date; all receipts on or before the date will be deleted</string>
+
+    <string name="importExport">Import/Export</string>
+    <string name="importName">Import</string>
+    <string name="exportName">Export</string>
+    <string name="importExportHelp">Data is imported to/exported from BudgetWatch.csv on external storage</string>
+    <string name="importedFrom">Imported from: %1$s</string>
+    <string name="exportedTo">Exported to: %1$s</string>
+    <string name="fileMissing">File missing: %1$s</string>
+    <string name="importFailed">Failed to import: %1$s</string>
+    <string name="exportFailed">Failed to export: %1$s</string>
+    <string name="importing">Importing&#8230;</string>
+    <string name="exporting">Exporting&#8230;</string>
+
+    <string name="purgeOldReceipts">Purge Old Receipts</string>
+    <string name="cleaning">Cleaning&#8230;</string>
+
+    <string name="loading">Loading&#8230;</string>
+
+    <string name="pictureCaptureError">Unable to capture image with camera</string>
+    <string name="noCameraPermissionError">Unable to capture receipt without the camera permission</string>
+
+    <string name="iconDescription">BudgetWatch icon</string>
+    <string name="addExpenseDescription">Add an expense transaction</string>
+</resources>
