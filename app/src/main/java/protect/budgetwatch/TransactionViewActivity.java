@@ -103,7 +103,7 @@ public class TransactionViewActivity extends AppCompatActivity
 
         final Calendar date = new GregorianCalendar();
         final DateFormat dateFormatter = SimpleDateFormat.getDateInstance();
-        final EditText dateField = (EditText) findViewById(R.id.date);
+        final TextView dateField = (TextView) findViewById(R.id.date);
         dateField.setText(dateFormatter.format(date.getTime()));
 
         final DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener()
@@ -115,21 +115,16 @@ public class TransactionViewActivity extends AppCompatActivity
                 dateField.setText(dateFormatter.format(date.getTime()));
             }
         };
-
-        dateField.setOnFocusChangeListener(new View.OnFocusChangeListener()
+        dateField.setOnClickListener(new View.OnClickListener()
         {
             @Override
-            public void onFocusChange(View v, boolean hasFocus)
-            {
-                if (hasFocus)
-                {
-                    int year = date.get(Calendar.YEAR);
-                    int month = date.get(Calendar.MONTH);
-                    int day = date.get(Calendar.DATE);
-                    DatePickerDialog datePicker = new DatePickerDialog(TransactionViewActivity.this,
-                            dateSetListener, year, month, day);
-                    datePicker.show();
-                }
+            public void onClick(View v) {
+                int year = date.get(Calendar.YEAR);
+                int month = date.get(Calendar.MONTH);
+                int day = date.get(Calendar.DATE);
+                DatePickerDialog datePicker = new DatePickerDialog(TransactionViewActivity.this,
+                        dateSetListener, year, month, day);
+                datePicker.show();
             }
         });
 
