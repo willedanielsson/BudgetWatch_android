@@ -121,7 +121,8 @@ public class BudgetViewActivity extends AppCompatActivity
                         messageId = R.string.budgetValueMissing;
                     }
 
-                    Snackbar.make(v, messageId, Snackbar.LENGTH_LONG).show();
+                    //Snackbar.make(v, messageId, Snackbar.LENGTH_LONG).show();
+                    Toast.makeText(BudgetViewActivity.this, messageId, Toast.LENGTH_LONG).show();
                 }
             }
         });

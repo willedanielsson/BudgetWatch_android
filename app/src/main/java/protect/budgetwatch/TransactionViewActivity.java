@@ -287,7 +287,8 @@ public class TransactionViewActivity extends AppCompatActivity
                 final String budget = (String)budgetSpinner.getSelectedItem();
                 if (budget == null)
                 {
-                    Snackbar.make(v, R.string.budgetMissing, Snackbar.LENGTH_LONG).show();
+                    //Snackbar.make(v, R.string.budgetMissing, Snackbar.LENGTH_LONG).show();
+                    Toast.makeText(TransactionViewActivity.this, R.string.budgetMissing, Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -297,7 +298,8 @@ public class TransactionViewActivity extends AppCompatActivity
                 final String valueStr = valueField.getText().toString();
                 if (valueStr.isEmpty())
                 {
-                    Snackbar.make(v, R.string.valueMissing, Snackbar.LENGTH_LONG).show();
+                    //Snackbar.make(v, R.string.valueMissing, Snackbar.LENGTH_LONG).show();
+                    Toast.makeText(TransactionViewActivity.this, R.string.valueMissing, Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -308,7 +310,8 @@ public class TransactionViewActivity extends AppCompatActivity
                 }
                 catch (NumberFormatException e)
                 {
-                    Snackbar.make(v, R.string.valueInvalid, Snackbar.LENGTH_LONG).show();
+                    //Snackbar.make(v, R.string.valueInvalid, Snackbar.LENGTH_LONG).show();
+                    Toast.makeText(TransactionViewActivity.this, R.string.valueInvalid, Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -325,7 +328,8 @@ public class TransactionViewActivity extends AppCompatActivity
                 }
                 catch (ParseException e)
                 {
-                    Snackbar.make(v, R.string.dateInvalid, Snackbar.LENGTH_LONG).show();
+                    //Snackbar.make(v, R.string.dateInvalid, Snackbar.LENGTH_LONG).show();
+                    Toast.makeText(TransactionViewActivity.this, R.string.dateInvalid, Toast.LENGTH_LONG).show();
                     return;
                 }
 
