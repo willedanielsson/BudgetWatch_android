@@ -2,6 +2,7 @@ package protect.budgetwatch;
 
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
@@ -62,7 +64,112 @@ public class BudgetActivity extends AppCompatActivity
         }
 
         final Calendar date = Calendar.getInstance();
+        final Calendar date2 = Calendar.getInstance();
 
+        // Set to the last ms at the end of the month
+        final long dateMonthEndMs = CalendarUtil.getEndOfMonthMs(date.get(Calendar.YEAR),
+                date.get(Calendar.MONTH));
+
+        // Set to beginning of the month
+        final long dateMonthStartMs = CalendarUtil.getStartOfMonthMs(date.get(Calendar.YEAR),
+                date.get(Calendar.MONTH));
+
+
+        final Bundle b = getIntent().getExtras();
+        final long budgetStartMs = b != null ? b.getLong("budgetStart", dateMonthStartMs) : dateMonthStartMs;
+        final long budgetEndMs = b != null ? b.getLong("budgetEnd", dateMonthEndMs) : dateMonthEndMs;
+
+        final DateFormat dateFormatter = SimpleDateFormat.getDateInstance();
+
+        final TextView dateStartField = (TextView) findViewById(R.id.dateRangeStart);
+        dateStartField.setText(dateFormatter.format(budgetStartMs));
+        final DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener()
+        {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int day)
+            {
+                date.set(year, month, day);
+                dateStartField.setText(dateFormatter.format(date.getTime()));
+
+
+                long startOfBudgetMs = CalendarUtil.getStartOfDayMs(view.getYear(),
+                        view.getMonth(), view.getDayOfMonth());
+                Intent intent = new Intent(BudgetActivity.this, BudgetActivity.class);
+                intent.setFlags(
+                        Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_TASK_ON_HOME);
+
+                Bundle bundle = new Bundle();
+                bundle.putLong("budgetStart", startOfBudgetMs);
+                bundle.putLong("budgetEnd", budgetEndMs );
+                intent.putExtras(bundle);
+                startActivity(intent);
+
+                BudgetActivity.this.finish();
+            }
+        };
+        dateStartField.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                int year = date.get(Calendar.YEAR);
+                int month = date.get(Calendar.MONTH);
+                int day = date.get(Calendar.DATE);
+                DatePickerDialog datePicker = new DatePickerDialog(BudgetActivity.this,
+                        dateSetListener, year, month, day);
+                datePicker.show();
+            }
+        });
+
+        final DateFormat dateFormatter2 = SimpleDateFormat.getDateInstance();
+        final TextView dateEndField = (TextView) findViewById(R.id.dateRangeEnd);
+        dateEndField.setText(dateFormatter2.format(budgetEndMs));
+
+        final DatePickerDialog.OnDateSetListener dateSetEndListener = new DatePickerDialog.OnDateSetListener()
+        {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int day)
+            {
+                date2.set(year, month, day);
+                dateEndField.setText(dateFormatter2.format(date2.getTime()));
+
+
+                long endOfBudgetMs = CalendarUtil.getEndOfDayMs(view.getYear(),
+                        view.getMonth(), view.getDayOfMonth());
+
+                if (budgetStartMs > endOfBudgetMs)
+                {
+                    Toast.makeText(BudgetActivity.this, R.string.startDateAfterEndDate, Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+
+
+                Intent intent = new Intent(BudgetActivity.this, BudgetActivity.class);
+                intent.setFlags(
+                        Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_TASK_ON_HOME);
+
+                Bundle bundle = new Bundle();
+                bundle.putLong("budgetStart", budgetStartMs);
+                bundle.putLong("budgetEnd", endOfBudgetMs);
+                intent.putExtras(bundle);
+                startActivity(intent);
+
+                BudgetActivity.this.finish();
+            }
+        };
+        dateEndField.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                int year = date2.get(Calendar.YEAR);
+                int month = date2.get(Calendar.MONTH);
+                int day = date2.get(Calendar.DATE);
+                DatePickerDialog datePicker = new DatePickerDialog(BudgetActivity.this,
+                        dateSetEndListener, year, month, day);
+                datePicker.show();
+            }
+        });
+/*
         // Set to the last ms at the end of the month
         final long dateMonthEndMs = CalendarUtil.getEndOfMonthMs(date.get(Calendar.YEAR),
                 date.get(Calendar.MONTH));
@@ -141,9 +248,9 @@ public class BudgetActivity extends AppCompatActivity
 
             }
         });
+*/
 
-
-        final List<Budget> budgets = db.getBudgets(budgetStartMs, budgetEndMs);
+        final List<Budget> budgets = db.getBudgets(dateMonthStartMs, dateMonthEndMs);
         final BudgetAdapter budgetListAdapter = new BudgetAdapter(this, budgets);
         budgetList.setAdapter(budgetListAdapter);
 
