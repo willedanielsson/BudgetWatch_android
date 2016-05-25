@@ -63,22 +63,20 @@ public class BudgetActivity extends AppCompatActivity
 
         final Calendar date = Calendar.getInstance();
 
-        // Set to the last ms at the end of the month
-        final long dateMonthEndMs = CalendarUtil.getEndOfMonthMs(date.get(Calendar.YEAR),
-                date.get(Calendar.MONTH));
+
 
         // Set to beginning of the month
         final long dateMonthStartMs = CalendarUtil.getStartOfMonthMs(date.get(Calendar.YEAR),
                 date.get(Calendar.MONTH));
 
-        final Bundle b = getIntent().getExtras();
-        final long budgetStartMs = b != null ? b.getLong("budgetStart", dateMonthStartMs) : dateMonthStartMs;
-        final long budgetEndMs = b != null ? b.getLong("budgetEnd", dateMonthEndMs) : dateMonthEndMs;
+        // Set to the last ms at the end of the month
+        final long dateMonthEndMs = CalendarUtil.getEndOfMonthMs(date.get(Calendar.YEAR),
+                date.get(Calendar.MONTH));
 
-        date.setTimeInMillis(budgetStartMs);
+        date.setTimeInMillis(dateMonthStartMs);
         String budgetStartString = DateFormat.getDateInstance(DateFormat.SHORT).format(date.getTime());
 
-        date.setTimeInMillis(budgetEndMs);
+        date.setTimeInMillis(dateMonthEndMs);
         String budgetEndString = DateFormat.getDateInstance(DateFormat.SHORT).format(date.getTime());
 
         String dateRangeFormat = getResources().getString(R.string.dateRangeFormat);
@@ -86,64 +84,8 @@ public class BudgetActivity extends AppCompatActivity
 
         final TextView dateRangeField = (TextView) findViewById(R.id.dateRange);
         dateRangeField.setText(dateRangeString);
-        dateRangeField.setOnClickListener(new View.OnClickListener(){
 
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                builder.setTitle(R.string.budgetDateRangeHelp);
-
-                final View view = getLayoutInflater().inflate(R.layout.budget_date_picker_layout, null, false);
-
-                builder.setView(view);
-                builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener()
-                {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which)
-                    {
-                        dialog.cancel();
-                    }
-                });
-                builder.setPositiveButton(R.string.set, new DialogInterface.OnClickListener()
-                {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which)
-                    {
-                        DatePicker startDatePicker = (DatePicker) view.findViewById(R.id.startDate);
-                        DatePicker endDatePicker = (DatePicker) view.findViewById(R.id.endDate);
-
-                        long startOfBudgetMs = CalendarUtil.getStartOfDayMs(startDatePicker.getYear(),
-                                startDatePicker.getMonth(), startDatePicker.getDayOfMonth());
-                        long endOfBudgetMs = CalendarUtil.getEndOfDayMs(endDatePicker.getYear(),
-                                endDatePicker.getMonth(), endDatePicker.getDayOfMonth());
-
-                        if (startOfBudgetMs > endOfBudgetMs)
-                        {
-                            Toast.makeText(BudgetActivity.this, R.string.startDateAfterEndDate, Toast.LENGTH_LONG).show();
-                            return;
-                        }
-
-                        Intent intent = new Intent(BudgetActivity.this, BudgetActivity.class);
-                        intent.setFlags(
-                                Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_TASK_ON_HOME);
-
-                        Bundle bundle = new Bundle();
-                        bundle.putLong("budgetStart", startOfBudgetMs);
-                        bundle.putLong("budgetEnd", endOfBudgetMs);
-                        intent.putExtras(bundle);
-                        startActivity(intent);
-
-                        BudgetActivity.this.finish();
-                    }
-                });
-
-                builder.show();
-
-            }
-        });
-
-
-        final List<Budget> budgets = db.getBudgets(budgetStartMs, budgetEndMs);
+        final List<Budget> budgets = db.getBudgets(dateMonthStartMs, dateMonthEndMs);
         final BudgetAdapter budgetListAdapter = new BudgetAdapter(this, budgets);
         budgetList.setAdapter(budgetListAdapter);
 

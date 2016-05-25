@@ -315,7 +315,7 @@ public class TransactionViewActivity extends AppCompatActivity
                 final String note = noteField.getText().toString();
                 // The note field is optional, so it is OK if it is empty
 
-                EditText dateField = (EditText) findViewById(R.id.date);
+                TextView dateField = (TextView) findViewById(R.id.date);
                 final String dateStr = dateField.getText().toString();
                 final DateFormat dateFormatter = SimpleDateFormat.getDateInstance();
                 long dateMs;
