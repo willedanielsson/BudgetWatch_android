@@ -131,7 +131,7 @@ public class BudgetActivity extends AppCompatActivity
             Intent i = new Intent(getApplicationContext(), BudgetViewActivity.class);
             Bundle bundle = new Bundle();
             bundle.putString("id", budget.name);
-            bundle.putBoolean("view", true);
+            bundle.putBoolean("update", true);
             i.putExtras(bundle);
             startActivity(i);
 

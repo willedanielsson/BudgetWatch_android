@@ -50,12 +50,12 @@ public class BudgetViewActivity extends AppCompatActivity
             Budget existingBudget = db.getBudgetStoredOnly(budgetName);
             valueField.setText(String.format("%d", existingBudget.max));
 
-            if(updateBudget)
-            {
+            //if(updateBudget)
+            //{
                 budgetNameField.setEnabled(false);
                 setTitle(R.string.editBudgetTitle);
-            }
-            else
+            //}
+            /*else
             {
                 budgetNameField.setEnabled(false);
                 valueField.setEnabled(false);
@@ -66,7 +66,7 @@ public class BudgetViewActivity extends AppCompatActivity
                 cancelButton.setVisibility(Button.GONE);
 
                 setTitle(R.string.viewBudgetTitle);
-            }
+            }*/
         }
         else
         {
@@ -121,7 +121,6 @@ public class BudgetViewActivity extends AppCompatActivity
                         messageId = R.string.budgetValueMissing;
                     }
 
-                    //Snackbar.make(v, messageId, Snackbar.LENGTH_LONG).show();
                     Toast.makeText(BudgetViewActivity.this, messageId, Toast.LENGTH_LONG).show();
                 }
             }
