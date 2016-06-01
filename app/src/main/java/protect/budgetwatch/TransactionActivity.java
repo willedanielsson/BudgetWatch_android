@@ -94,41 +94,6 @@ public class TransactionActivity extends AppCompatActivity
             return true;
         }
 
-        if(id == R.id.action_purge_receipts)
-        {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle(R.string.cleanupHelp);
-
-            final View view = getLayoutInflater().inflate(R.layout.cleanup_layout, null, false);
-
-            builder.setView(view);
-            builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener()
-            {
-                @Override
-                public void onClick(DialogInterface dialog, int which)
-                {
-                    dialog.cancel();
-                }
-            });
-            builder.setPositiveButton(R.string.clean, new DialogInterface.OnClickListener()
-            {
-                @Override
-                public void onClick(DialogInterface dialog, int which)
-                {
-                    DatePicker endDatePicker = (DatePicker) view.findViewById(R.id.endDate);
-
-                    long endOfBudgetMs = CalendarUtil.getEndOfDayMs(endDatePicker.getYear(),
-                            endDatePicker.getMonth(), endDatePicker.getDayOfMonth());
-
-                    DatabaseCleanupTask task = new DatabaseCleanupTask(TransactionActivity.this,
-                            endOfBudgetMs);
-                    task.execute();
-                }
-            });
-
-            builder.show();
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
