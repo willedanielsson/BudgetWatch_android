@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BW-Android</string>
+    <string name="app_name">Application2</string>
     <string name="icon">icon</string>
     <string name="budgetsTitle">Budgets</string>
     <string name="addBudgetTitle">Add Budget</string>
