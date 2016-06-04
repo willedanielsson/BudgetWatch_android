@@ -434,15 +434,8 @@ public class TransactionViewActivity extends AppCompatActivity
         final boolean viewBudget = b != null && b.getBoolean("view", false);
         final boolean editBudget = b != null && b.getBoolean("update", false);
 
-        if(viewBudget)
-        {
-            getMenuInflater().inflate(R.menu.edit_menu, menu);
-        }
+        getMenuInflater().inflate(R.menu.delete_menu, menu);
 
-        if(editBudget)
-        {
-            getMenuInflater().inflate(R.menu.delete_menu, menu);
-        }
 
         return super.onCreateOptionsMenu(menu);
     }
