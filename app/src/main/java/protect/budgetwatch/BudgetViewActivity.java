@@ -108,9 +108,6 @@ public class BudgetViewActivity extends AppCompatActivity
                         db.updateBudget(budgetName, value);
                     }
 
-                    Toast.makeText(BudgetViewActivity.this, "Budget account: " + budgetName,
-                            Toast.LENGTH_SHORT).show();
-
                     finish();
                 }
                 else
