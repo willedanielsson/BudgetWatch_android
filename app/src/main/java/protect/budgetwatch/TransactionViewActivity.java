@@ -145,13 +145,6 @@ public class TransactionViewActivity extends AppCompatActivity
         final EditText noteField = (EditText) findViewById(R.id.note);
         final Button cancelButton = (Button)findViewById(R.id.cancelButton);
         final Button saveButton = (Button)findViewById(R.id.saveButton);
-        final Button captureButton = (Button)findViewById(R.id.captureButton);
-        final Button viewButton = (Button)findViewById(R.id.viewButton);
-        final Button updateButton = (Button)findViewById(R.id.updateButton);
-        final View receiptLayout = findViewById(R.id.receiptLayout);
-        final TextView receiptLocationField = (TextView) findViewById(R.id.receiptLocation);
-        final View noReceiptButtonLayout = findViewById(R.id.noReceiptButtonLayout);
-        final View hasReceiptButtonLayout = findViewById(R.id.hasReceiptButtonLayout);
 
         if(updateTransaction || viewTransaction)
         {
@@ -168,7 +161,6 @@ public class TransactionViewActivity extends AppCompatActivity
             valueField.setText(String.format("%.2f", transaction.value));
             noteField.setText(transaction.note);
             dateField.setText(dateFormatter.format(new Date(transaction.dateMs)));
-            receiptLocationField.setText(transaction.receipt);
 
             if(viewTransaction)
             {
@@ -184,51 +176,9 @@ public class TransactionViewActivity extends AppCompatActivity
                 // The no receipt layout need never be displayed
                 // when only viewing a transaction, as one should
                 // not be able to capture a receipt
-                noReceiptButtonLayout.setVisibility(View.GONE);
 
                 // If viewing a transaction, only display the receipt
                 // field if a receipt is captured
-                if(transaction.receipt.isEmpty() == false)
-                {
-                    receiptLayout.setVisibility(View.VISIBLE);
-                    hasReceiptButtonLayout.setVisibility(View.VISIBLE);
-                }
-                else
-                {
-                    receiptLayout.setVisibility(View.GONE);
-                }
-            }
-            else
-            {
-                // If editing a transaction, always list the receipt field
-                receiptLayout.setVisibility(View.VISIBLE);
-                if(transaction.receipt.isEmpty() && capturedUncommittedReceipt == null)
-                {
-                    noReceiptButtonLayout.setVisibility(View.VISIBLE);
-                    hasReceiptButtonLayout.setVisibility(View.GONE);
-                }
-                else
-                {
-                    noReceiptButtonLayout.setVisibility(View.GONE);
-                    hasReceiptButtonLayout.setVisibility(View.VISIBLE);
-                    updateButton.setVisibility(View.VISIBLE);
-                }
-            }
-        }
-        else
-        {
-            // If adding a transaction, always list the receipt field
-            receiptLayout.setVisibility(View.VISIBLE);
-            if(capturedUncommittedReceipt == null)
-            {
-                noReceiptButtonLayout.setVisibility(View.VISIBLE);
-                hasReceiptButtonLayout.setVisibility(View.GONE);
-            }
-            else
-            {
-                noReceiptButtonLayout.setVisibility(View.GONE);
-                hasReceiptButtonLayout.setVisibility(View.VISIBLE);
-                updateButton.setVisibility(View.VISIBLE);
             }
         }
 
@@ -250,31 +200,6 @@ public class TransactionViewActivity extends AppCompatActivity
                 }
             }
         };
-
-        captureButton.setOnClickListener(captureCallback);
-        updateButton.setOnClickListener(captureCallback);
-
-        viewButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                Intent i = new Intent(v.getContext(), ReceiptViewActivity.class);
-                final Bundle b = new Bundle();
-
-                final TextView receiptField = (TextView) findViewById(R.id.receiptLocation);
-
-                String receipt = receiptField.getText().toString();
-                if(capturedUncommittedReceipt != null)
-                {
-                    receipt = capturedUncommittedReceipt;
-                }
-
-                b.putString("receipt", receipt);
-                i.putExtras(b);
-                startActivity(i);
-            }
-        });
 
         saveButton.setOnClickListener(new View.OnClickListener()
         {
@@ -329,34 +254,18 @@ public class TransactionViewActivity extends AppCompatActivity
                     return;
                 }
 
-                String receipt = receiptLocationField.getText().toString();
-                if(capturedUncommittedReceipt != null)
-                {
-                    // Delete the old receipt, it is no longer needed
-                    File oldReceipt = new File(receipt);
-                    if(oldReceipt.delete() == false)
-                    {
-                        Log.e(TAG, "Unable to delete old receipt file: " + capturedUncommittedReceipt);
-                    }
-
-                    // Remember the new receipt to save
-                    receipt = capturedUncommittedReceipt;
-                    capturedUncommittedReceipt = null;
-                }
-
-
                 DBHelper db = new DBHelper(TransactionViewActivity.this);
 
                 if(updateTransaction)
                 {
                     db.updateTransaction(transactionId, type, name, account,
-                            budget, value, note, dateMs, receipt);
+                            budget, value, note, dateMs);
 
                 }
                 else
                 {
                     db.insertTransaction(type, name, account, budget,
-                            value, note, dateMs, receipt);
+                            value, note, dateMs);
                 }
 
                 finish();

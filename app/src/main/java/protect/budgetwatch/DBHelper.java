@@ -345,7 +345,7 @@ public class DBHelper extends SQLiteOpenHelper
      * false otherwise
      */
     public boolean insertTransaction(final int type, final String description, final String account, final String budget,
-                                 final double value, final String note, final long dateInMs, final String receipt)
+                                     final double value, final String note, final long dateInMs)
     {
         ContentValues contentValues = new ContentValues();
         contentValues.put(TransactionDbIds.TYPE, type);
@@ -355,7 +355,6 @@ public class DBHelper extends SQLiteOpenHelper
         contentValues.put(TransactionDbIds.VALUE, value);
         contentValues.put(TransactionDbIds.NOTE, note);
         contentValues.put(TransactionDbIds.DATE, dateInMs);
-        contentValues.put(TransactionDbIds.RECEIPT, receipt);
 
         SQLiteDatabase db = getWritableDatabase();
         long newId = db.insert(TransactionDbIds.TABLE, null, contentValues);
@@ -404,7 +403,7 @@ public class DBHelper extends SQLiteOpenHelper
      */
     public boolean updateTransaction(final int id, final int type, final String description,
                                      final String account, final String budget, final double value,
-                                     final String note, final long dateInMs, final String receipt)
+                                     final String note, final long dateInMs)
     {
         ContentValues contentValues = new ContentValues();
         contentValues.put(TransactionDbIds.TYPE, type);
@@ -414,7 +413,6 @@ public class DBHelper extends SQLiteOpenHelper
         contentValues.put(TransactionDbIds.VALUE, value);
         contentValues.put(TransactionDbIds.NOTE, note);
         contentValues.put(TransactionDbIds.DATE, dateInMs);
-        contentValues.put(TransactionDbIds.RECEIPT, receipt);
 
         SQLiteDatabase db = getWritableDatabase();
         int rowsUpdated = db.update(TransactionDbIds.TABLE, contentValues,

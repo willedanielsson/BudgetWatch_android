@@ -42,7 +42,6 @@ class TransactionCursorAdapter extends CursorAdapter
         holder.valueField = (TextView) view.findViewById(R.id.value);
         holder.dateField = (TextView) view.findViewById(R.id.date);
         holder.budgetField = (TextView) view.findViewById(R.id.budget);
-        holder.receiptIcon = (ImageView) view.findViewById(R.id.receiptIcon);
         view.setTag(holder);
 
         return view;
@@ -64,14 +63,5 @@ class TransactionCursorAdapter extends CursorAdapter
         holder.budgetField.setText(transaction.budget);
 
         holder.dateField.setText(DATE_FORMATTER.format(transaction.dateMs));
-
-        if(transaction.receipt.isEmpty())
-        {
-            holder.receiptIcon.setVisibility(View.GONE);
-        }
-        else
-        {
-            holder.receiptIcon.setVisibility(View.VISIBLE);
-        }
     }
 }

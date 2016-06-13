@@ -66,7 +66,7 @@ public class DatabaseCleanupTask  extends AsyncTask<Void, Void, Void>
 
             db.updateTransaction(transaction.id, transaction.type, transaction.description,
                     transaction.account, transaction.budget, transaction.value, transaction.note,
-                    transaction.dateMs, /* no receipt */ "");
+                    transaction.dateMs /* no receipt */);
         }
         cursor.close();
     }
@@ -88,7 +88,7 @@ public class DatabaseCleanupTask  extends AsyncTask<Void, Void, Void>
                     // the receipt from the transaction
                     db.updateTransaction(transaction.id, transaction.type, transaction.description,
                             transaction.account, transaction.budget, transaction.value, transaction.note,
-                            transaction.dateMs, /* no receipt */ "");
+                            transaction.dateMs /* no receipt */);
                     Log.i(TAG, "Transaction " + transaction.id + " listed a receipt but it is missing, " +
                             "removing receipt");
                 }
